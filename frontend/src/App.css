@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+html,body {
+    overflow-x: hidden;
+}
+
+*{
+ font-family: Outfit;
+}
+
+@theme {
+     --color-primary:#166534;
+    --color-secondary: #16A34A;
+    --font-primary:"Libertinus Math", system-ui;
+    --font-secondary:"Libre Baskerville", serif;
+    --font-extra:"Sriracha", "cursive"; 
+    --font-poppins: "Poppins", sans-serif;
+    
+}
+
+*{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar{
+        display : none;
+}}
+
+
+
+html {
+  scroll-behavior: smooth;
+}
