@@ -1,0 +1,58 @@
+# Remove the multiple .gitignore files
+git rm admin/.gitignore
+git rm backend/.gitignore  
+git rm frontend/.gitignore
+
+# Create a comprehensive root .gitignore
+@"
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp/
+.pnp.js
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+.parcel-cache/
+.vite/
+
+# Lock files (controversial - some commit them, some don't)
+# package-lock.json
+# yarn.lock
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+*.log
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary
+tmp/
+temp/
+"@ | Out-File -FilePath .gitignore -Encoding utf8
+
