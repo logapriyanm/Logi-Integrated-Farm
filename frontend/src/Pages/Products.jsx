@@ -3,15 +3,13 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify"; // 🆕 for feedback
+import { toast } from "react-toastify";
 
 const categories = ["All Products", "Farm Produce", "Pets & Livestock"];
 
 export default function ProductsPage() {
-  const { products, addToCart } = useCart();
+  const { products, addToCart, token, navigate } = useCart();
   const [selectedCategory, setSelectedCategory] = useState("All Products");
-
-  // 🆕 Track quantity for each product
   const [quantities, setQuantities] = useState({});
 
   const filteredProducts =
@@ -19,7 +17,6 @@ export default function ProductsPage() {
       ? products
       : products.filter((p) => p.category === selectedCategory);
 
-  // 🆕 Quantity update handler
   const handleQuantityChange = (productId, change, maxStock) => {
     setQuantities((prev) => {
       const newQty = (prev[productId] || 1) + change;
@@ -30,6 +27,23 @@ export default function ProductsPage() {
       }
       return { ...prev, [productId]: newQty };
     });
+  };
+
+  // 🆕 Handle add to cart with login check
+  const handleAddToCart = (product, quantity) => {
+    if (!token) {
+      toast.error("Please login to add items to cart");
+      navigate("/login");
+      return;
+    }
+
+    if (quantity > product.stock) {
+      toast.error(`Only ${product.stock} units of ${product.name} available`);
+      return;
+    }
+    
+    addToCart({ ...product, quantity });
+    toast.success(`${quantity} ${product.name} added to cart`);
   };
 
   return (
@@ -90,7 +104,7 @@ export default function ProductsPage() {
                   </span>
                 </div>
 
-                {/* 🆕 Quantity selector */}
+                {/* Quantity selector */}
                 <div className="flex items-center justify-center mt-4 gap-3">
                   <button
                     onClick={(e) => {
@@ -113,19 +127,12 @@ export default function ProductsPage() {
                   </button>
                 </div>
 
-                {/* 🆕 Add to Cart */}
+                {/* Add to Cart */}
                 <div className="mt-4 flex flex-col gap-4">
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      if (quantity > product.stock) {
-                        toast.error(
-                          `Only ${product.stock} units of ${product.name} available`
-                        );
-                        return;
-                      }
-                      addToCart({ ...product, quantity });
-                      toast.success(`${quantity} ${product.name} added to cart`);
+                      handleAddToCart(product, quantity);
                     }}
                     className="bg-green-600 hover:bg-green-700 cursor-pointer text-white py-2 rounded-lg flex items-center justify-center gap-2"
                   >

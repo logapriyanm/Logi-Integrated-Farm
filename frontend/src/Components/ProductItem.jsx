@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import RelatedProducts from "./RelatedProducts";
+import { toast } from "react-toastify";
 
 export default function ProductItem() {
     const { productId } = useParams();
-    const { products, addToCart, currency } = useCart();
+    const { products, addToCart, currency, token, navigate } = useCart();
     const [productData, setProductData] = useState(null);
     const [quantity, setQuantity] = useState(1);
 
@@ -17,20 +18,30 @@ export default function ProductItem() {
         }
     }, [productId, products]);
 
+    // 🆕 Handle add to cart with login check
+    const handleAddToCart = () => {
+        if (!token) {
+            toast.error("Please login to add items to cart");
+            navigate("/login");
+            return;
+        }
+        addToCart({ ...productData, quantity });
+        toast.success(`${quantity} ${productData.name} added to cart`);
+    };
+
     if (!productData) {
         return <h2 className="text-center mt-10">Product not found</h2>;
     }
 
-    // 👇 determine unit based on category
     const unit = productData.category === "Farm Produce" ? "kg" : "";
 
     const handleIncrease = () => {
-  if (quantity < productData.stock) {
-    setQuantity((prev) => prev + 1);
-  } else {
-    alert(`Only ${productData.stock} items available in stock`);
-  }
-};
+        if (quantity < productData.stock) {
+            setQuantity((prev) => prev + 1);
+        } else {
+            toast.error(`Only ${productData.stock} items available in stock`);
+        }
+    };
 
     const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
@@ -49,11 +60,8 @@ export default function ProductItem() {
                 {currency}{productData.price} / {unit}
             </p>
 
-
             <div className="flex justify-between">
                 {/* Quantity controls */}
-
-
                 <div className="flex items-center gap-4 mt-6">
                     <button
                         onClick={handleDecrease}
@@ -77,8 +85,9 @@ export default function ProductItem() {
                     <p>Easy returns and exchange within 7 days</p>
                 </div>
             </div>
+            
             <button
-                onClick={() => addToCart({ ...productData, quantity })}
+                onClick={handleAddToCart}
                 className="bg-green-600 text-white px-6 py-2 mt-6 rounded-lg hover:bg-green-700"
             >
                 Add {quantity} {unit} to Cart
@@ -87,12 +96,10 @@ export default function ProductItem() {
             <hr className="mt-8 flex text-center sm:w-4/5" />
 
             {/* Description */}
-
             <div className="mt-10">
                 <div className="flex">
                     <b className="border px-5 py-2 border-gray-400 text-sm">Description</b>
-                    <p className="border px-5 py-2 border-gray-400   text-sm">Reviews (122)</p>
-
+                    <p className="border px-5 py-2 border-gray-400 text-sm">Reviews (122)</p>
                 </div>
                 <div className="flex flex-col gap-4 border p-5 text-gray-500">
                     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis, nostrum.</p>
@@ -100,13 +107,8 @@ export default function ProductItem() {
                 </div>
             </div>
 
-
             {/* Related Products */}
-             <RelatedProducts currentCategory={productData.category} currentId={productData._id} />
-
-
-
-
+            <RelatedProducts currentCategory={productData.category} currentId={productData._id} />
         </div>
     );
 }

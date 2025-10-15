@@ -113,8 +113,15 @@ export const CartProvider = ({ children }) => {
     if (token) mergeGuestCartToDB();
   }, [token]);
 
-  // ---------------- Add to cart ----------------
-  const addToCart = async (product, quantity = 1) => {
+// In your CartContext.jsx - update the addToCart function
+const addToCart = async (product, quantity = 1) => {
+  // Check if user is logged in
+  if (!token) {
+    toast.error("Please login to add items to cart");
+    navigate("/login");
+    return;
+  }
+
   setCart((prevCart) => {
     const existing = prevCart.find((item) => item._id === product._id);
     const currentQty = existing ? existing.quantity : 0;
@@ -140,7 +147,6 @@ export const CartProvider = ({ children }) => {
           { headers: { token } }
         )
         .then(() => {
-         
           fetchUserCart();
         })
         .catch(() => toast.error("Failed to update cart"));
@@ -162,7 +168,7 @@ export const CartProvider = ({ children }) => {
           { itemId: _id, quantity: 0 },
           { headers: { token } }
         );
-        toast.success( "Item removed from cart");
+        toast.success("Item removed from cart");
 
       } catch (error) {
         toast.error("Failed to remove item");
@@ -172,16 +178,16 @@ export const CartProvider = ({ children }) => {
 
   // ---------------- Quantity controls ----------------
   const increaseQty = async (id) => {
-  const item = cart.find((c) => c._id === id);
-  if (!item) return;
+    const item = cart.find((c) => c._id === id);
+    if (!item) return;
 
-  if (item.quantity + 1 > item.stock) {
-    toast.error(`Only ${item.stock} units of ${item.name} available`);
-    return;
-  }
+    if (item.quantity + 1 > item.stock) {
+      toast.error(`Only ${item.stock} units of ${item.name} available`);
+      return;
+    }
 
-  await addToCart(item, 1);
-};
+    await addToCart(item, 1);
+  };
 
 
   const decreaseQty = async (id) => {
@@ -217,7 +223,7 @@ export const CartProvider = ({ children }) => {
     setCart([]);
     localStorage.removeItem("guestCart");
     localStorage.removeItem("token");
-    
+
   };
 
   return (

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { FaShoppingCart } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const RelatedProducts = ({ currentCategory, currentId }) => {
-  const { products, addToCart, currency } = useCart();
+  const { products, addToCart, currency, token, navigate } = useCart();
   const [related, setRelated] = useState([]);
 
   useEffect(() => {
@@ -20,6 +21,17 @@ const RelatedProducts = ({ currentCategory, currentId }) => {
       setRelated(filtered);
     }
   }, [currentCategory, currentId, products]);
+
+  // 🆕 Handle add to cart with login check
+  const handleAddToCart = (item) => {
+    if (!token) {
+      toast.error("Please login to add items to cart");
+      navigate("/login");
+      return;
+    }
+    addToCart(item);
+    toast.success(`${item.name} added to cart`);
+  };
 
   if (related.length === 0) return null;
 
@@ -49,7 +61,7 @@ const RelatedProducts = ({ currentCategory, currentId }) => {
                 {currency}{item.price} / {unit}
               </p>
               <button
-                onClick={() => addToCart(item)}
+                onClick={() => handleAddToCart(item)}
                 className="mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
               >
                 <FaShoppingCart /> Add to Cart
