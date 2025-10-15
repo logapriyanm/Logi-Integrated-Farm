@@ -42,7 +42,7 @@ const OurFarm = () => {
             <div className="py-10">
                 <div className="flex flex-col text-center items-center">
                     <h1 className="text-2xl flex gap-5 md:text-4xl font-primary mb-5 font-bold">
-                        Welcome to Loki Integrated Farm
+                        Welcome to Logi Integrated Farm
                     </h1>
                     <p className="md:w-[800px] text-base text-gray-600">
                         A 20-acre model of integrated, sustainable agriculture and animal husbandry.

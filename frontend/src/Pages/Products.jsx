@@ -22,7 +22,7 @@ export default function ProductsPage() {
       const newQty = (prev[productId] || 1) + change;
       if (newQty < 1) return { ...prev, [productId]: 1 };
       if (newQty > maxStock) {
-        toast.error(`Only ${maxStock} units available`);
+        toast.error(`Only ${maxStock} Products available`);
         return { ...prev, [productId]: maxStock };
       }
       return { ...prev, [productId]: newQty };
@@ -85,7 +85,7 @@ export default function ProductsPage() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-contain"
               />
               <div className="p-4 flex-1 flex flex-col">
                 <h3 className="text-lg font-semibold">{product.name}</h3>

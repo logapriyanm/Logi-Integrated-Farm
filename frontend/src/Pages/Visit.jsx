@@ -36,7 +36,7 @@ const Visit = () => {
             </div>
 
             <div className="py-10 flex flex-col items-center">
-                <h1 className="text-2xl flex gap-5 md:text-3xl text-center  font-bold">Welcome to Loki Integrated Farm</h1>
+                <h1 className="text-2xl flex gap-5 md:text-3xl text-center  font-bold">Welcome to Logi Integrated Farm</h1>
                 <p className="mt-4  text-base md:w-[600px] text-center p-2 text-gray-600">We welcome visits from schools, agriculture students, investors, tourists, and anyone curious about modern integrated farming.</p>
                 <p className="mt-10  text-2xl  font-bold text-center "> During Your Visit, You Can:</p>
 

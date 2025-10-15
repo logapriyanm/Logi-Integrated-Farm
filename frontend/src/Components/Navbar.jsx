@@ -35,7 +35,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/"> <h1 className="text-base font-semibold flex gap-2 text-green-700 items-center">
           <TbPlant size={25} className="text-white bg-green-700 p-1 rounded-2xl" />
-          Loki Integrated Farm
+          Logi Integrated Farm
         </h1></Link>
 
         {/* Desktop Menu */}

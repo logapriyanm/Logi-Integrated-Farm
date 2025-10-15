@@ -23,7 +23,7 @@ const Home = () => {
           <h1 className="text-4xl md:text-5xl font-primary font-bold flex flex-col justify-center gap-3 items-center text-center">
             Welcome to
             <span className="text-green-400 md:text-6xl text-4xl flex items-center text-center font-primary justify-center gap-2 flex-wrap">
-              Loki Integrated
+              Logi Integrated
               <span className="flex items-center gap-2">
                 Farm
                 <GiFarmer className="text-white text-3xl md:text-[50px]" />

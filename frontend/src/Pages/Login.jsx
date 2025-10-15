@@ -1,15 +1,16 @@
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { token, setToken, navigate, backendUrl } = useCart();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
@@ -28,8 +29,7 @@ export default function Login() {
       if (response.data.success) {
         toast.success("Login successful");
         setToken(response.data.token);
-        localStorage.setItem("token",response.data.token);
-        
+        localStorage.setItem("token", response.data.token);
       } else {
         toast.error(response.data.message || "Invalid credentials");
       }
@@ -39,11 +39,15 @@ export default function Login() {
     }
   };
 
- useEffect(()=>{
-  if(token){
-    navigate("/")
-  }
- },[token])
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -71,35 +75,48 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border rounded-md outline-none focus:outline-none"
+              className="w-full px-4 py-2 border rounded-md outline-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               required
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block text-gray-700 font-medium mb-1">
               Password
             </label>
-            <input
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              placeholder="Enter your password"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                placeholder="Enter your password"
+                className="w-full px-4 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800 focus:outline-none"
+              >
+                {showPassword ? (
+                  <FaEyeSlash size={16}  />
+                ) : (
+                  <FaEye size={16}  />
+                )}
+              </button>
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 cursor-pointer rounded-md hover:bg-green-700 transition shadow-md font-medium"
+            className="w-full bg-green-600 text-white py-3 cursor-pointer rounded-md hover:bg-green-700 transition shadow-md font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             Login
           </button>
         </form>
 
         <div className="mt-6 text-center text-gray-700">
-          <p className="flex justify-center">
+          <p className="flex justify-center items-center">
             Don't have an account?{" "}
             <NavLink
               to="/signup"
