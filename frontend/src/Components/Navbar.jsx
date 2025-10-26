@@ -146,7 +146,7 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-50">
-          <div className="fixed top-0 left-0 h-full w-80 bg-white shadow-xl flex flex-col">
+          <div className="fixed top-0 left-0 h-full w-full bg-white shadow-xl flex flex-col">
             {/* Header - Fixed */}
             <div className="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-200 bg-green-50">
               <Link to="/" onClick={handleMobileLinkClick}>

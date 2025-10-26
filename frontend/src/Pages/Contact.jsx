@@ -61,7 +61,7 @@ const Contact = () => {
                                     required
                                     className="w-full appearance-none border rounded-md p-2 pr-8 focus:outline-green-500 text-sm"
                                 >
-                                    <option value="">Select a topic</option>
+                                    <option value="" disabled>Select a topic</option>
                                     <option value="Enquiry">General Enquiry</option>
                                     <option value="booking">Farm Visit Booking</option>
                                     <option value="product">Product Information</option>
@@ -75,7 +75,7 @@ const Contact = () => {
                             </div>
 
                             <textarea
-                                rows="8"
+                                rows="14"
                                 maxLength="500"
                                 placeholder="Tell us how we can help you..."
                                 required

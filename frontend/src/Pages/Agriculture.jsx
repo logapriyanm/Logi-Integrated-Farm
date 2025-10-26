@@ -15,7 +15,14 @@ import { GiHighGrass, GiPlantRoots } from "react-icons/gi";
 import { MdGrass } from "react-icons/md";
 import { MdOutlineSystemUpdateAlt } from "react-icons/md";
 
+import { useNavigate } from "react-router-dom"
+
 const Agriculture = () => {
+    const navigate = useNavigate();
+
+    const contact = () => {
+        navigate("/contact");
+    }
     return (
         <section className="w-full">
 
@@ -298,10 +305,10 @@ const Agriculture = () => {
                 <h1 className="text-3xl font-poppins text-center font-bold">Experience Sustainable Agriculture</h1>
                 <p className=" font-poppins text-base text-center text-gray-600">Visit our farm to see how we grow healthy crops using eco-friendly practices and innovative techniques.</p>
                 <div className=" md:flex gap-10 items-center text-center  justify-center">
-                    <button className="bg-green-500 px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-white font-semibold hover:bg-green-600">
+                    <button onClick={contact} className="bg-green-500 px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-white font-semibold hover:bg-green-600">
                         Schedule Farm Tour
                     </button>
-                    <button className="border-2 border-green-600 cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-green-600 font-semibold hover:bg-green-600 hover:text-white">
+                    <button onClick={contact} className="border-2 border-green-600 cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-green-600 font-semibold hover:bg-green-600 hover:text-white">
                         Contact Us
                     </button>
                 </div>

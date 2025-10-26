@@ -13,7 +13,7 @@ const Visit = () => {
         <section className="">
 
             <div
-                className=" flex items-center justify-center relative w-full opacity-80   h-[70vh] md:h-[60vh] bg-cover bg-center"
+                className=" flex items-center justify-center relative w-full opacity-100   h-[70vh] md:h-[60vh] bg-cover bg-center"
                 style={{ backgroundImage: `url(${VisitImg})` }}
             >
                 <div className="flex flex-col items-center text-center  text-white px-6">
@@ -24,14 +24,7 @@ const Visit = () => {
                     <p className="mt-4 text-lg md:text-xl text-white">
                         Come see sustainable farming in action!
                     </p>
-                    <div className="md:flex-row flex flex-col gap-10 py-5 ">
-                        <button className="bg-green-500 px-6 py-3  cursor-pointer  mt-2 rounded-xl text-white font-semibold hover:bg-green-600 transition ease-in-out">
-                            Schedule Visit
-                        </button>
-                        <button className="border-2 cursor-pointer border-white hover:border-green-600 md:px-6 px-10 mt-2 py-3  rounded-xl text-white font-semibold hover:bg-green-600 hover:text-white">
-                            Learn More
-                        </button>
-                    </div>
+                   
                 </div>
             </div>
 

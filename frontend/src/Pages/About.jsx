@@ -3,13 +3,24 @@ import AboutImg from "../assets/About.jpg";
 import Philosophy from "../assets/Philosophy.jpg";
 
 import AboutDatas from "../Datas/AboutDatas.jsx";
+import { useNavigate } from "react-router-dom";
 
 // icons
 import { GrWorkshop } from "react-icons/gr";
 import { FaEye, FaHeartbeat } from "react-icons/fa";
 import { RiHomeHeartLine, RiCommunityLine } from "react-icons/ri";
+import { use } from "react";
 
 const About = () => {
+    const navigate = useNavigate();
+
+    const ourFarm = () => {
+        navigate("/farm");
+    }
+
+    const contact = () => {
+        navigate("/contact");
+    }
     return (
         <section>
             <div
@@ -25,9 +36,9 @@ const About = () => {
                 </div>
             </div>
 
-            <div className='py-20 flex flex-col items-center text-center gap-10'>
+            <div className='py-10 flex flex-col items-center text-center gap-10'>
                 <h1 className='text-4xl font-bold font-primary'>Welcome to <span className='text-green-600'>Logi Integrated Farm</span></h1>
-                <p className='md:w-[750px] p-5 text-lg text-gray-600'>Located on 20 acres of rich agricultural land, Loki Integrated Farm is a passion-driven, multi-functional farm
+                <p className='md:w-[750px] p-2 text-lg text-gray-600'>Located on 20 acres of rich agricultural land, Loki Integrated Farm is a passion-driven, multi-functional farm
                     focused on sustainable food production, animal welfare, and innovative farming methods.
                     Our vision is to become a leading example of integrated farming in
                     the region — producing healthy, organic crops and responsibly bred animals and fish.
@@ -35,7 +46,7 @@ const About = () => {
                 </p>
             </div>
             <div className="flex justify-center">
-                <div className="md:grid md:grid-cols-2 md:w-[1000px] md:py-10 md:px-30 p-5  gap-5 ">
+                <div className="md:grid md:grid-cols-2 md:w-[1000px] md:py-10 md:px-30 p-4  gap-5 ">
                     <div className="flex flex-col gap-5 ">
                         <h1 className="text-2xl font-bold">Our Philosophy</h1>
                         <p className="text-base text-gray-600">We believe that farming is more than just cultivation; it's a way of life. By blending traditional practices with modern technology, we create a system that is efficient, eco-friendly, and self-sustaining.</p>
@@ -67,7 +78,7 @@ const About = () => {
             <div className="py-10" >
                 <div className="flex flex-col items-center gap-5">
                     <h1 className="text-2xl md:text-4xl font-bold font-poppins">Our Core Values</h1>
-                    <p className="text-xl text-gray-600 font-primary">The principles that guide everything we do at Loki Integrated Farm</p>
+                    <p className="text-xl text-center m-0.5 md:m-0 text-gray-600 font-primary">The principles that guide everything we do at Logi Integrated Farm</p>
                 </div>
                 <div className="py-20 md:flex md:px-30 p-5 justify-center  gap-10 text-center">
                     <div className=" mb-5  p-5 flex flex-col items-center gap-3">
@@ -120,10 +131,10 @@ const About = () => {
                 </h1>
                 <p className=" text-lg md:w-[650px] text-white">Visit us to see sustainable farming in action and meet our team of dedicated professionals.</p>
                 <div className="mt-6 md:flex gap-10  justify-center">
-                    <button className="bg-white px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-green-500 font-semibold hover:bg-green-600 ">
+                    <button onClick={ourFarm} className="bg-white px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-green-500 font-semibold hover:bg-green-600 ">
                        Explore Our Farm
                     </button>
-                    <button className="border border-white cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-white font-semibold hover:bg-white hover:text-green-700">
+                    <button onClick={contact} className="border border-white cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-white font-semibold hover:bg-white hover:text-green-700">
                        Schedule a Visit
                     </button>
                 </div>

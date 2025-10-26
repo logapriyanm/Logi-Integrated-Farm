@@ -5,13 +5,19 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
+
 const categories = ["All Products", "Farm Produce", "Pets & Livestock"];
 
 export default function ProductsPage() {
+  const navigateContact = useNavigate();
   const { products, addToCart, token, navigate } = useCart();
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [quantities, setQuantities] = useState({});
 
+  const contact = () => {
+    navigateContact("/contact");
+  }
   const filteredProducts =
     selectedCategory === "All Products"
       ? products
@@ -156,10 +162,10 @@ export default function ProductsPage() {
             farm visit.
           </p>
           <div className="flex justify-center gap-4">
-            <button className="px-6 py-3 rounded-lg bg-green-600 cursor-pointer text-white font-semibold shadow hover:bg-green-700 transition">
+            <button onClick={contact} className="px-6 py-3 rounded-lg bg-green-600 cursor-pointer text-white font-semibold shadow hover:bg-green-700 transition">
               Contact Us
             </button>
-            <button className="px-6 py-3 rounded-lg border-2 cursor-pointer border-green-600 text-green-600 font-semibold hover:bg-green-100 transition">
+            <button onClick={contact} className="px-6 py-3 rounded-lg border-2 cursor-pointer border-green-600 text-green-600 font-semibold hover:bg-green-100 transition">
               Book a Visit
             </button>
           </div>

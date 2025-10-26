@@ -7,10 +7,22 @@ import { GiFarmer, GiGoat, GiGreenhouse } from "react-icons/gi";
 import { TbPlant } from "react-icons/tb";
 import { IoFishOutline } from "react-icons/io5";
 import { IoIosArrowRoundForward } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
+  const goToFarm = () => {
+  navigate("/farm"); 
+};
+
+const contactUs = () => {
+  navigate("/contact"); 
+
+};
+
   return (
 
     <section>
@@ -35,7 +47,7 @@ const Home = () => {
           </p>
           <p className=" text-xl md:w-[650px]">Experience modern farming at its finest with our 20-acre integrated agriculture and animal breeding facility featuring crops, livestock, and sustainable practices.</p>
           <div className="mt-6 flex flex-col gap-4 justify-center md:flex-row">
-            <button className="bg-green-500 px-6 py-3 cursor-pointer rounded-full text-white font-semibold hover:bg-green-600">
+            <button onClick={goToFarm} className="bg-green-500 px-6 py-3 cursor-pointer rounded-full text-white font-semibold hover:bg-green-600">
               Explore Our Farm
             </button>
             <button className="border border-white cursor-pointer px-6 py-3 rounded-full text-white font-semibold hover:bg-white hover:text-green-700">
@@ -153,10 +165,10 @@ const Home = () => {
         </h1>
         <p className=" text-xl md:w-[650px] text-white">Experience sustainable farming firsthand with a guided tour of our facilities and meet our animals.</p>
         <div className="mt-6 md:flex gap-10  justify-center">
-          <button className="bg-white px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-green-500 font-semibold hover:bg-green-600">
+          <button onClick={contactUs} className="bg-white px-6 py-3 cursor-pointer  border-2 mt-2 rounded-full text-green-500 font-semibold hover:bg-green-600">
             Book Farm Tour
           </button>
-          <button className="border border-white cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-white font-semibold hover:bg-white hover:text-green-700">
+          <button onClick={contactUs} className="border border-white cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-white font-semibold hover:bg-white hover:text-green-700">
             Contact Us
           </button>
         </div>

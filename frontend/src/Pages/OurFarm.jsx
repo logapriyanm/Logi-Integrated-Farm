@@ -16,7 +16,14 @@ import { LuDog } from "react-icons/lu";
 import { PiPlantDuotone } from "react-icons/pi";
 import { FaInfinity } from "react-icons/fa6";
 
+import { useNavigate } from "react-router-dom";
+
 const OurFarm = () => {
+    const navigate = useNavigate();
+
+    const contact = () => {
+        navigate("/contact");
+    };
     return (
         <section>
 
@@ -300,10 +307,10 @@ const OurFarm = () => {
                 <h1 className="text-3xl font-poppins text-center font-bold">Experience Our Integrated Farm</h1>
                 <p className=" font-poppins text-base text-center text-gray-600">Book a guided tour to see our sustainable farming practices and meet our animals up close.</p>
                 <div className=" md:flex gap-10 items-center text-center  justify-center">
-                    <button className="bg-green-500 px-6 py-3  cursor-pointer border-2 mt-2 rounded-full text-white font-semibold hover:bg-green-600">
+                    <button onClick={contact} className="bg-green-500 px-6 py-3  cursor-pointer border-2 mt-2 rounded-full text-white font-semibold hover:bg-green-600">
                         Book Farm Tour
                     </button>
-                    <button className="border-2 border-green-600 cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-green-600 font-semibold hover:bg-green-600 hover:text-white">
+                    <button onClick={contact} className="border-2 border-green-600 cursor-pointer md:px-6 px-10 mt-2 py-3  rounded-full text-green-600 font-semibold hover:bg-green-600 hover:text-white">
                         Contact Us
                     </button>
                 </div>

@@ -66,8 +66,8 @@ const Footer = () => {
 
                         {/* Extra text */}
                         <div className="flex gap-5 mt-3 md:mt-0">
-                            <span>Privacy Policy</span>
-                            <span>Terms of Service</span>
+                            <span className="cursor-pointer">Privacy Policy</span>
+                            <span className="cursor-pointer">Terms of Service</span>
                         </div>
                     </div>
                 </footer>
