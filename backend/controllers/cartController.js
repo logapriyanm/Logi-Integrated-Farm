@@ -21,7 +21,7 @@ const addToCart = async (req, res) => {
   }
 };
 
-// Update single item quantity (or remove if quantity <= 0)
+
 const updateCart = async (req, res) => {
   try {
     const userId = req.user.id;

@@ -1,60 +1,51 @@
-import {v2 as cloudinary} from 'cloudinary';
-import ProductModel from '../models/productModel.js';
+import { v2 as cloudinary } from "cloudinary";
+import ProductModel from "../models/productModel.js";
 
- const addProduct = async (req, res) => {
-
+const addProduct = async (req, res) => {
   try {
     const { name, category, price, stock, description } = req.body;
-
-    // If you're using multer.single('image')
     const file = req.file;
 
     if (!name || !category || !price) {
-      return res.status(400).json({ message: "Name, category, and price are required." });
+      return res
+        .status(400)
+        .json({ message: "Name, category, and price are required." });
     }
-
     if (!file) {
       return res.status(400).json({ message: "Please upload an image." });
     }
-
-    // Upload the image to Cloudinary
     const result = await cloudinary.uploader.upload(file.path, {
       resource_type: "image",
       folder: "integrated-farm/products",
     });
 
     const normalizedCategory = category
-    .trim()
-    .split(" ")
-    .map(w => w[0].toUpperCase() + w.slice(1).toLowerCase())
-    .join(" ");
-    
+      .trim()
+      .split(" ")
+      .map((w) => w[0].toUpperCase() + w.slice(1).toLowerCase())
+      .join(" ");
+
     // Save product to MongoDB
     const productData = new ProductModel({
-    name,
-    category: normalizedCategory,
-    price,
-    stock,
-    description,
-    image: result.secure_url,
-    date: Date.now()
-});
+      name,
+      category: normalizedCategory,
+      price,
+      stock,
+      description,
+      image: result.secure_url,
+      date: Date.now(),
+    });
 
     await productData.save();
-
     res.status(201).json({
       success: true,
       message: " Product added successfully",
-      
     });
-    
-    
   } catch (error) {
     console.error(" Error adding product:", error);
     res.status(500).json({ message: error.message });
   }
 };
-
 
 const listProducts = async (req, res) => {
   try {
@@ -72,36 +63,33 @@ const listProducts = async (req, res) => {
   }
 };
 
-
 const removeProduct = async (req, res) => {
   try {
     await ProductModel.findByIdAndDelete(req.body.id);
     res.status(200).json({
       success: true,
-      message: "Product removed successfully"
+      message: "Product removed successfully",
     });
   } catch (error) {
     console.error("Error removing product:", error);
     res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
 
-
 const singleProduct = async (req, res) => {
-   try {
-     
-    const {productId} = req.params;
+  try {
+    const { productId } = req.params;
 
     const product = await ProductModel.findById(productId);
     res.status(200).json(product);
-   } catch (error) {
+  } catch (error) {
     console.error(" Error fetching single product:", error);
     res.status(500).json({ message: error.message });
-   }
-}
+  }
+};
 
 const updateProduct = async (req, res) => {
   try {
@@ -111,7 +99,9 @@ const updateProduct = async (req, res) => {
     // Find the existing product
     const product = await ProductModel.findById(id);
     if (!product) {
-      return res.status(404).json({ success: false, message: "Product not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found" });
     }
 
     // If a new image is uploaded, replace it on Cloudinary
@@ -143,5 +133,10 @@ const updateProduct = async (req, res) => {
   }
 };
 
-
-export { addProduct, listProducts,updateProduct, removeProduct, singleProduct };
+export {
+  addProduct,
+  listProducts,
+  updateProduct,
+  removeProduct,
+  singleProduct,
+};

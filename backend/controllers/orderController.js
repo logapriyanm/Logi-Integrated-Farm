@@ -13,7 +13,6 @@ const placeOrder = async (req, res) => {
     const { items, amount, address, paymentMethod } = req.body;
     const userId = req.user.id;
 
-    // 🛑 Step 1: Check stock availability
     for (const item of items) {
       const product = await productModel.findById(item.productId);
       if (!product) {
@@ -29,8 +28,7 @@ const placeOrder = async (req, res) => {
         });
       }
     }
-
-    // ✅ Step 2: Create order
+    //  Create order
     const newOrder = new orderModel({
       userId,
       items,
@@ -41,8 +39,7 @@ const placeOrder = async (req, res) => {
       date: Date.now(),
     });
     await newOrder.save();
-
-    // ✅ Step 3: Reduce stock safely
+    //  Reduce stock safely
     for (const item of items) {
       await productModel.findByIdAndUpdate(
         item.productId,
@@ -52,8 +49,8 @@ const placeOrder = async (req, res) => {
     }
 
     await UserModel.findByIdAndUpdate(userId, { cartData: {} });
-
     res.json({ success: true, message: "Order placed successfully" });
+
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -79,7 +76,7 @@ const placeOrderStripe = async (req, res) => {
     const newOrder = new orderModel(orderData);
     await newOrder.save();
 
-    // 🛑 Validate stock before proceeding
+    
     for (const item of items) {
       const product = await productModel.findById(item.productId);
       if (!product) {
@@ -180,11 +177,11 @@ const updateStatus = async (req, res) => {
     // Update status
     order.status = status;
 
-    // Automatically mark payment as true if status is Delivered
+
     if (status === "Delivered") {
       order.payment = true;
     } else if (payment !== undefined) {
-      order.payment = payment; // allow manual payment update if sent
+      order.payment = payment; 
     }
 
     await order.save();
