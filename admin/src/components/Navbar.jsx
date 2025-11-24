@@ -12,7 +12,7 @@ const Navbar = ({setToken}) => {
       <div className="flex items-center gap-2">
         <Link to="/" className="flex items-center gap-2">
           <TbPlant size={28} className="text-white bg-green-700 p-1 rounded-2xl" />
-          <h1 className="text-lg font-semibold text-green-500 hidden md:block">Loki Integrated Farm</h1>
+          <h1 className="text-lg font-semibold text-green-500 hidden md:block">Logi Integrated Farm</h1>
         </Link>
       </div>
 
