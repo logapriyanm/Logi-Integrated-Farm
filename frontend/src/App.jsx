@@ -17,15 +17,15 @@ import ProductItem from './Components/ProductItem.jsx';
 import Orders from './Pages/Orders.jsx';
 import NotFound from './Pages/NotFound.jsx';
 
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Verify from './Pages/Verify.jsx';
 
 
 function App() {
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <Navbar />
 
       <Routes>
@@ -43,7 +43,7 @@ function App() {
         <Route path='/place-order' element={<PlaceOrder />} />
         <Route path='/orders' element={<Orders />} />
         <Route path='/verify' element={<Verify />} />
-         <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
