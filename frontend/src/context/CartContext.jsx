@@ -12,8 +12,33 @@ export const CartProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
+const [token, setToken] = useState(localStorage.getItem("token") || "");
+const [tokenExpiry, setTokenExpiry] = useState(
+  localStorage.getItem("tokenExpiry")
+);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+  if (!token || !tokenExpiry) return;
+
+  const remainingTime = Number(tokenExpiry) - Date.now();
+
+  if (remainingTime <= 0) {
+    logout();
+    navigate("/login");
+    return;
+  }
+
+  const timer = setTimeout(() => {
+    toast.info("Session expired. Please login again.");
+    logout();
+    navigate("/login");
+  }, remainingTime);
+
+  return () => clearTimeout(timer);
+}, [token, tokenExpiry]);
+
 
   // ---------------- Fetch all products ----------------
   const getProductsData = async () => {
@@ -217,14 +242,32 @@ const addToCart = async (product, quantity = 1) => {
     }
   };
 
-  // ---------------- Logout helper ----------------
-  const logout = () => {
-    setToken("");
-    setCart([]);
-    localStorage.removeItem("guestCart");
-    localStorage.removeItem("token");
+  useEffect(() => {
+  const interceptor = axios.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        logout();
+        navigate("/login");
+      }
+      return Promise.reject(err);
+    }
+  );
 
-  };
+  return () => axios.interceptors.response.eject(interceptor);
+}, []);
+
+
+  // ---------------- Logout helper ----------------
+const logout = () => {
+  setToken("");
+  setTokenExpiry(null);
+  setCart([]);
+  localStorage.removeItem("token");
+  localStorage.removeItem("tokenExpiry");
+  localStorage.removeItem("guestCart");
+};
 
   return (
     <CartContext.Provider

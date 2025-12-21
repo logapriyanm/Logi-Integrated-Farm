@@ -27,9 +27,14 @@ export default function Login() {
       });
 
       if (response.data.success) {
-        toast.success("Login successful");
-        setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem(
+          "tokenExpiry",
+          Date.now() + 24 * 60 * 60 * 1000 // 1 day
+        );
+        setToken(response.data.token);
+
+        toast.success("Login successful");
       } else {
         toast.error(response.data.message || "Invalid credentials");
       }
@@ -99,9 +104,9 @@ export default function Login() {
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800 focus:outline-none"
               >
                 {showPassword ? (
-                  <FaEyeSlash size={16}  />
+                  <FaEyeSlash size={16} />
                 ) : (
-                  <FaEye size={16}  />
+                  <FaEye size={16} />
                 )}
               </button>
             </div>
